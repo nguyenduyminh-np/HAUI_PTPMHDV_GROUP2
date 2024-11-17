@@ -40,7 +40,7 @@
                                     <div class="card mb-4">
                                         <div class="card-header">
                                             <i class="fas fa-chart-bar me-1"></i>
-                                            Bar Chart Example
+                                            Biểu đồ Target của Product
                                         </div>
                                         <div class="card-body"><canvas id="myPieChart" width="100%"
                                                 height="40"></canvas></div>
@@ -99,11 +99,15 @@
                 crossorigin="anonymous"></script>
             <script>
                 // Lấy dữ liệu từ JSP model
-                var labels = ${ labels }; // Các ngày
-                var data = ${ data };     // Dữ liệu tổng giá trị đơn hàng
+                // var labels = ${ labels }; // Các ngày
+                // var data = ${ data };     // Dữ liệu tổng giá trị đơn hàng
 
                 // Vẽ biểu đồ Area
-                var ctx = document.getElementById("myAreaChart").getContext('2d');
+                var labels = ${ labels };
+                var data = ${ data };
+
+
+                var ctx = document.getElementById("myAreaChart");
                 var myLineChart = new Chart(ctx, {
                     type: 'line',
                     data: {
