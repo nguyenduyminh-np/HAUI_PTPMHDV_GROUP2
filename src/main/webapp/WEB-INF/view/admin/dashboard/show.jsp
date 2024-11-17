@@ -30,7 +30,7 @@
                                     <div class="card mb-4">
                                         <div class="card-header">
                                             <i class="fas fa-chart-area me-1"></i>
-                                            Area Chart Example
+                                            Biểu đồ Order tháng 11
                                         </div>
                                         <div class="card-body"><canvas id="myAreaChart" width="100%"
                                                 height="40"></canvas></div>
@@ -42,7 +42,7 @@
                                             <i class="fas fa-chart-bar me-1"></i>
                                             Bar Chart Example
                                         </div>
-                                        <div class="card-body"><canvas id="myBarChart" width="100%"
+                                        <div class="card-body"><canvas id="myPieChart" width="100%"
                                                 height="40"></canvas></div>
                                     </div>
                                 </div>
@@ -94,11 +94,69 @@
             </div>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
                 crossorigin="anonymous"></script>
-            <script src="js/scripts.js"></script>
+
             <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"
                 crossorigin="anonymous"></script>
-            <script src="js/chart-area-demo.js"></script>
-            <script src="js/chart-bar-demo.js"></script>
+            <script>
+                // Lấy dữ liệu từ JSP model
+                var labels = ${ labels }; // Các ngày
+                var data = ${ data };     // Dữ liệu tổng giá trị đơn hàng
+
+                // Vẽ biểu đồ Area
+                var ctx = document.getElementById("myAreaChart").getContext('2d');
+                var myLineChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels, // Các ngày
+                        datasets: [{
+                            label: "Total Orders",  // Tiêu đề biểu đồ
+                            lineTension: 0.3,
+                            backgroundColor: "rgba(2,117,216,0.2)", // Màu nền dưới đường
+                            borderColor: "rgba(2,117,216,1)",       // Màu của đường
+                            pointRadius: 5,
+                            pointBackgroundColor: "rgba(2,117,216,1)",
+                            pointBorderColor: "rgba(255,255,255,0.8)",
+                            pointHoverRadius: 5,
+                            pointHoverBackgroundColor: "rgba(2,117,216,1)",
+                            pointHitRadius: 50,
+                            pointBorderWidth: 2,
+                            data: data,  // Dữ liệu tổng giá trị đơn hàng
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            xAxes: [{
+                                time: {
+                                    unit: 'date'
+                                },
+                                gridLines: {
+                                    display: false
+                                },
+                                ticks: {
+                                    maxTicksLimit: 7
+                                }
+                            }],
+                            yAxes: [{
+                                ticks: {
+                                    min: 0,
+                                    max: Math.max(...data),  // Đặt giá trị tối đa của trục Y theo dữ liệu
+                                    maxTicksLimit: 5
+                                },
+                                gridLines: {
+                                    color: "rgba(0, 0, 0, .125)",
+                                }
+                            }],
+                        },
+                        legend: {
+                            display: true
+                        }
+                    }
+                });
+            </script>
+
+            <!-- <script src="js/chart-area-demo.js"></script> -->
+            <script src="js/chart-pie-demo.js"></script>
+
             <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
                 crossorigin="anonymous"></script>
             <script src="js/datatables-simple-demo.js"></script>
